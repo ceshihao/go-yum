@@ -1,9 +1,11 @@
 package yum
 
 import (
+	"crypto/sha1"
 	"crypto/sha256"
 	"encoding/hex"
 	"fmt"
+	"hash"
 	"io"
 	"os"
 )
@@ -42,18 +44,19 @@ func (c *RepoDatabaseChecksum) CheckFile(name string) error {
 func ValidateChecksum(r io.Reader, checksum string, checksum_type string) error {
 	// get checksum value based by type
 	actual := ""
+	var s hash.Hash
 	switch checksum_type {
+	case "sha":
+		s = sha1.New()
 	case "sha256":
-		s := sha256.New()
-		if _, err := io.Copy(s, r); err != nil {
-			return err
-		}
-
-		actual = hex.EncodeToString(s.Sum(nil))
-
+		s = sha256.New()
 	default:
 		return fmt.Errorf("Unsupported checksum type: %s", checksum_type)
 	}
+	if _, err := io.Copy(s, r); err != nil {
+		return err
+	}
+	actual = hex.EncodeToString(s.Sum(nil))
 
 	// check against expected value
 	if checksum != actual {
