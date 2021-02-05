@@ -3,14 +3,15 @@ package yum
 import (
 	"encoding/hex"
 	"fmt"
-	"github.com/cavaliercoder/go-rpm"
-	"github.com/cavaliercoder/grab"
-	"github.com/pivotal-golang/bytefmt"
-	"golang.org/x/crypto/openpgp"
 	"io/ioutil"
 	"os"
 	"path/filepath"
 	"time"
+
+	"code.cloudfoundry.org/bytefmt"
+	"github.com/cavaliercoder/go-rpm"
+	"github.com/cavaliercoder/grab"
+	"golang.org/x/crypto/openpgp"
 )
 
 // Repo is a package repository defined in a Yumfile

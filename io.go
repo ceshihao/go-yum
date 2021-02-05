@@ -3,12 +3,13 @@ package yum
 import (
 	"errors"
 	"fmt"
-	"github.com/cavaliercoder/grab"
-	"github.com/pivotal-golang/bytefmt"
 	"log"
 	"os"
 	"strings"
 	"time"
+
+	"code.cloudfoundry.org/bytefmt"
+	"github.com/cavaliercoder/grab"
 )
 
 const (

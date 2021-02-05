@@ -1,0 +1,14 @@
+code.cloudfoundry.org/bytefmt v0.0.0-20160918231612-b12c1522f4cb h1:4LdvP2p5n2VO1ro7vdxe9DC4uxCngaPGXOwAxxAQQ2Q=
+code.cloudfoundry.org/bytefmt v0.0.0-20160918231612-b12c1522f4cb/go.mod h1:wN/zk7mhREp/oviagqUXY3EwuHhWyOvAdsn5Y4CzOrc=
+github.com/cavaliercoder/go-rpm v0.0.0-20160213171607-067941e17bc4 h1:ScWOO1wa8889hycOabd3jLybZQtJ99Tr4dSA9RF2QzU=
+github.com/cavaliercoder/go-rpm v0.0.0-20160213171607-067941e17bc4/go.mod h1:AZIh1CCnMrcVm6afFf96PBvE2MRpWFco91z8ObJtgDY=
+github.com/cavaliercoder/grab v0.0.0-20161221125617-e403b038e10c h1:x20nf/UEB86FzjCBR9GqguiMxZmB0++mtmy/91e2QhE=
+github.com/cavaliercoder/grab v0.0.0-20161221125617-e403b038e10c/go.mod h1:tTBkfNqSBfuMmMBFaO2phgyhdYhiZQ/+iXCZDzcDsMI=
+github.com/mattn/go-sqlite3 v1.2.0 h1:h2FYSp18EBpSL2XOLiU2jIvYcJpx5NxGmT2EFlaUesw=
+github.com/mattn/go-sqlite3 v1.2.0/go.mod h1:FPy6KqzDD04eiIsT53CuJW3U88zkxoIYsOqkbpncsNc=
+github.com/xi2/xz v0.0.0-20160429180352-19aeb13c4e7c h1:ndoXhFaHWlrvkFqs/0mbRj/XpQcpl9WzAagE20xbAM0=
+github.com/xi2/xz v0.0.0-20160429180352-19aeb13c4e7c/go.mod h1:HUYIGzjTL3rfEspMxjDjgmT5uz5wzYJKVo23qUhYTos=
+golang.org/x/crypto v0.0.0-20161221235747-f6b343c37ca8 h1:zIHAgCmsFRg+vGki4hNgH4OcldCIRM+T5OtdNTAIgeQ=
+golang.org/x/crypto v0.0.0-20161221235747-f6b343c37ca8/go.mod h1:6SG95UA2DQfeDnfUPMdvaQW0Q7yPrPDi9nlGo2tz2b4=
+golang.org/x/net v0.0.0-20161215194249-45e771701b81 h1:fw6vKYqWlQqaVrIv7KcFK8YHLSj7xKY86A9h28yw1ws=
+golang.org/x/net v0.0.0-20161215194249-45e771701b81/go.mod h1:mL1N/T3taQHkDXs73rZJwtUhF3w3ftmwwsq0BUmARs4=
