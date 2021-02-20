@@ -30,7 +30,7 @@ func (c *RepoCache) Update() error {
 	// select primary db
 	var primarydb *RepoDatabase = nil
 	for _, db := range repomd.Databases {
-		if db.Type == "primary" {
+		if db.Type == "primary_db" {
 			primarydb = &db
 			break
 		}
