@@ -20,7 +20,7 @@ type RepoCache struct {
 	Path string
 }
 
-func (c *RepoCache) Update() error {
+func (c *RepoCache) Update(databases ...string) error {
 	// cache metadata file
 	repomd, err := c.updateMetadata()
 	if err != nil {
@@ -29,10 +29,12 @@ func (c *RepoCache) Update() error {
 
 	// select primary db
 	var primarydb *RepoDatabase = nil
+	databaseMap := make(map[string]RepoDatabase, len(databases))
 	for _, db := range repomd.Databases {
 		if db.Type == "primary_db" {
 			primarydb = &db
-			break
+		} else if inStringSlice(databases, db.Type) {
+			databaseMap[db.Type] = db
 		}
 	}
 
@@ -48,6 +50,16 @@ func (c *RepoCache) Update() error {
 	// decompress primary database
 	if _, err = c.decompressDatabase(primarydb); err != nil {
 		return err
+	}
+
+	for _, database := range databaseMap {
+		if _, err := c.downloadDatabase(&database); err != nil {
+			return err
+		}
+
+		if _, err = c.decompressDatabase(&database); err != nil {
+			return err
+		}
 	}
 
 	return nil
