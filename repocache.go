@@ -70,6 +70,11 @@ func (c *RepoCache) PrimaryDB() (*PrimaryDatabase, error) {
 	return OpenPrimaryDB(path)
 }
 
+func (c *RepoCache) UpdateInfoDB() (*UpdateInfoDatabase, error) {
+	path := filepath.Join(c.Path, "gen/updateinfo.xml")
+	return OpenUpdateInfoDB(path)
+}
+
 // cacheMetadata downloads a repository's repomd.xml file to the given cache
 // directory.
 func (c *RepoCache) updateMetadata() (*RepoMetadata, error) {
