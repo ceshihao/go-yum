@@ -3,11 +3,12 @@ package yum
 import (
 	"database/sql"
 	"fmt"
-	"github.com/cavaliercoder/go-rpm"
-	_ "github.com/mattn/go-sqlite3"
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/cavaliercoder/go-rpm"
+	_ "github.com/mattn/go-sqlite3"
 )
 
 // TODO: Add support for XML primary dbs
@@ -199,8 +200,8 @@ func (c *PrimaryDatabase) InsertPackage(packages ...*rpm.PackageFile) error {
 			strings.Join(p.Groups(), "\n"),
 			p.BuildHost(),
 			p.SourceRPM(),
-			p.HeaderStart(),
-			p.HeaderEnd(),
+			0,
+			0,
 			p.Packager())
 
 		if err != nil {
@@ -252,48 +253,48 @@ func (c *PrimaryDatabase) Packages() (PackageEntries, error) {
 // DependenciesByPackage returns all package dependencies of the given type for
 // the given package key. The dependency type may be one of 'requires',
 // 'provides', 'conflicts' or 'obsoletes'.
-func (c *PrimaryDatabase) DependenciesByPackage(pkgKey int, typ string) (rpm.Dependencies, error) {
-	q := fmt.Sprintf("SELECT name, flags, epoch, version, release FROM %s WHERE pkgKey = %d", typ, pkgKey)
+// func (c *PrimaryDatabase) DependenciesByPackage(pkgKey int, typ string) ([]rpm.Dependency, error) {
+// 	q := fmt.Sprintf("SELECT name, flags, epoch, version, release FROM %s WHERE pkgKey = %d", typ, pkgKey)
 
-	// select packages
-	rows, err := c.db.Query(q)
-	if err != nil {
-		return nil, err
-	}
-	defer rows.Close()
+// 	// select packages
+// 	rows, err := c.db.Query(q)
+// 	if err != nil {
+// 		return nil, err
+// 	}
+// 	defer rows.Close()
 
-	// parse results
-	deps := make(rpm.Dependencies, 0)
-	for rows.Next() {
-		var flgs, name, version, release string
-		var epoch, iflgs int
+// 	// parse results
+// 	deps := make([]rpm.Dependency, 0)
+// 	for rows.Next() {
+// 		var flgs, name, version, release string
+// 		var epoch, iflgs int
 
-		if err = rows.Scan(&name, &flgs, &epoch, &version, &release); err != nil {
-			return nil, fmt.Errorf("Error reading dependencies: %v", err)
-		}
+// 		if err = rows.Scan(&name, &flgs, &epoch, &version, &release); err != nil {
+// 			return nil, fmt.Errorf("Error reading dependencies: %v", err)
+// 		}
 
-		switch flgs {
-		case "EQ":
-			iflgs = rpm.DepFlagEqual
+// 		switch flgs {
+// 		case "EQ":
+// 			iflgs = rpm.DepFlagEqual
 
-		case "LT":
-			iflgs = rpm.DepFlagLesser
+// 		case "LT":
+// 			iflgs = rpm.DepFlagLesser
 
-		case "LE":
-			iflgs = rpm.DepFlagLesserOrEqual
+// 		case "LE":
+// 			iflgs = rpm.DepFlagLesserOrEqual
 
-		case "GE":
-			iflgs = rpm.DepFlagGreaterOrEqual
+// 		case "GE":
+// 			iflgs = rpm.DepFlagGreaterOrEqual
 
-		case "GT":
-			iflgs = rpm.DepFlagGreater
-		}
+// 		case "GT":
+// 			iflgs = rpm.DepFlagGreater
+// 		}
 
-		deps = append(deps, rpm.NewDependency(iflgs, name, epoch, version, release))
-	}
+// 		deps = append(deps, rpm.NewDependency(iflgs, name, epoch, version, release))
+// 	}
 
-	return deps, nil
-}
+// 	return deps, nil
+// }
 
 // FilesByPackage returns all known files included in the package of the given
 // package key.

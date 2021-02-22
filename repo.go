@@ -194,13 +194,13 @@ func (c *Repo) Sync(cachedir, packagedir string) error {
 	// schedule download jobs
 	reqs := make([]*grab.Request, 0)
 	for i, p := range missing {
-		req, err := grab.NewRequest(urljoin(c.BaseURL, p.LocationHref()))
+		req, err := grab.NewRequest("", urljoin(c.BaseURL, p.LocationHref()))
 		if err != nil {
 			Errorf(err, "Error requesting package %v", p)
 		} else {
 			req.Label = fmt.Sprintf("[ %d / %d ] %v", i+1, len(missing), p)
 			req.Filename = filepath.Join(packagedir, filepath.Base(p.LocationHref()))
-			req.Size = uint64(p.PackageSize())
+			req.Size = p.PackageSize()
 			sum, err := p.Checksum()
 			if err != nil {
 				Errorf(err, "Error reading checksum for package %v", p)
@@ -209,7 +209,7 @@ func (c *Repo) Sync(cachedir, packagedir string) error {
 				if err != nil {
 					Errorf(err, "Error decoding checksum for package %v", p)
 				} else {
-					req.SetChecksum(p.ChecksumType(), b)
+					req.SetChecksum(nil, b, false)
 					reqs = append(reqs, req)
 				}
 			}
@@ -221,8 +221,8 @@ func (c *Repo) Sync(cachedir, packagedir string) error {
 
 	// handle each finished package
 	for resp := range responses {
-		if resp.Error != nil {
-			Errorf(resp.Error, "Error downloading %s", resp.Request.Label)
+		if resp.Err() != nil {
+			Errorf(resp.Err(), "Error downloading %s", resp.Request.Label)
 		} else {
 			// gpg check
 			// TODO: create more gpgcheck threads

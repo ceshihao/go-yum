@@ -170,10 +170,10 @@ func download(reqs []*grab.Request, workers int) <-chan *grab.Response {
 				for i, resp := range responses {
 					if resp != nil && resp.IsComplete() {
 						// print final result
-						if resp.Error != nil {
-							fmt.Fprintf(os.Stderr, "Error downloading %s: %v\033[K\n", resp.Request.Label, resp.Error)
+						if resp.Err() != nil {
+							fmt.Fprintf(os.Stderr, "Error downloading %s: %v\033[K\n", resp.Request.Label, resp.Err())
 						} else {
-							fmt.Printf("Finished %s (%s in %v)\033[K\n", resp.Request.Label, bytefmt.ByteSize(resp.BytesTransferred()), resp.Duration())
+							fmt.Printf("Finished %s (%s in %v)\033[K\n", resp.Request.Label, bytefmt.ByteSize(uint64(resp.BytesComplete())), resp.Duration())
 						}
 
 						// mark completed
@@ -190,7 +190,7 @@ func download(reqs []*grab.Request, workers int) <-chan *grab.Response {
 				for _, resp := range responses {
 					if resp != nil {
 						inProgress++
-						fmt.Printf("Downloading %s (%d%% of %s)...\033[K\n", resp.Request.Label, int(100*resp.Progress()), bytefmt.ByteSize(resp.Size))
+						fmt.Printf("Downloading %s (%d%% of %s)...\033[K\n", resp.Request.Label, int(100*resp.Progress()), bytefmt.ByteSize(uint64(resp.Size)))
 					}
 				}
 			}
