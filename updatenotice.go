@@ -51,7 +51,7 @@ type Package struct {
 	Name     string `xml:"name,attr"`
 	Version  string `xml:"version,attr"`
 	Release  string `xml:"release,attr"`
-	Epoch    string `xml:"epoch,attr"`
+	Epoch    int    `xml:"epoch,attr"`
 	Arch     string `xml:"arch,attr"`
 	Src      string `xml:"src,attr"`
 	FileName string `xml:"filename"`
