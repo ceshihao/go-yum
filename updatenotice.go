@@ -58,5 +58,6 @@ type Package struct {
 }
 
 func (u *UpdateNotice) UpdatedTime() time.Time {
-	return time.Unix(u.Updated.Time, 0)
+	t, _ := time.Parse("2006-01-02 15:04:05", u.Updated.Date)
+	return t
 }
