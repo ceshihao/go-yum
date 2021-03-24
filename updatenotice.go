@@ -39,12 +39,12 @@ type Reference struct {
 
 type PkgList struct {
 	Collection *Collection `xml:"collection"`
-	Name       string      `xml:"name"`
-	Packages   []*Package  `xml:"package"`
 }
 
 type Collection struct {
 	Short string `xml:"short,attr"`
+	Name       string      `xml:"name"`
+	Packages   []*Package  `xml:"package"`
 }
 
 type Package struct {
